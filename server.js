@@ -10,16 +10,16 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 app.post("/generate", async (req, res) => {
     console.log("Request Body:", req.body);
     try {
-        if (!GOOGLE_API_KEY) {
-            return res.status(500).json({ error: "Google API key is missing" });
+        if (!GEMINI_API_KEY) {
+            return res.status(500).json({ error: " GEMINI API key is missing" });
         }
 
-        const genAI = new GoogleGenerativeAI(GOOGLE_API_KEY);
+        const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
         const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
         const {prompt} = req.body; 
@@ -41,4 +41,6 @@ app.post("/generate", async (req, res) => {
 
 
 
-app.listen(5000, () => console.log(" Server running on port 5000 "));
+const PORT = process.env.PORT;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
